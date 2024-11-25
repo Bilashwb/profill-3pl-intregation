@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Note that some adapters may set a maximum length for the String type by default, please ensure your strings are long
+// enough when changing adapters.
+// See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:dev.sqlite"
+// }
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:Profill1@@db.somnetics.in/test_shopify_3pl_integration"
+}
+
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+}
+
+model Customers {
+  id          Int    @id @default(autoincrement())
+  shop        String
+  customer_id Int
+  credential  String @default("")
+  prefix      String @default("")
+  environment Int //0-dev,1-production
+}
+
+model podVariants {
+  id            Int    @id @default(autoincrement())
+  productId     String
+  variantId     String @default("")
+  profillSku    String @default("")
+  hitSku        String @default("")
+  upcCode       String @default("")
+  htsCode       String @default("")
+  hitcolor      String @default("")
+  hitsize       String @default("")
+  artfileUrl    String @default("")
+  shop          String   @default("")
+  profillStatus String @default("Pending")
+  podPrice      Float  @default(0)
+}
+
+model PodConfigs {
+  id          Int    @id @default(autoincrement())
+  productId   String
+  location    String @default("")
+  locationId  String @default("")
+  colors      String @default("")
+  decoration  String @default("")
+  description String @default("")
+  artfile     String @default("")
+  artfileUrl  String @default("")
+}
+
+model Order {
+  id               Int    @id @default(autoincrement())
+  shop             String
+  name             String @default("")
+  orderId          String @default("")
+  received         String @default("")
+  queueId          String @default("")
+  submitted        String @default("")
+  warehouseOrderId String @default("")
+  status           String @default("")
+}
