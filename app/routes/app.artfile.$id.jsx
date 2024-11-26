@@ -130,6 +130,7 @@ export default function ParentComponent() {
   };
 
   useEffect(() => {
+    console.log(loaderData)
     let variants = loaderData.product.variants.edges;
     setproduct(loaderData.product);
     const addedVariantIds = loaderData.dbVariants.map((item) => item.variantId);

@@ -3,8 +3,7 @@ import { getOptionValue } from "../../../utils/others/helper";
 import { PlusIcon, RefreshIcon } from "@shopify/polaris-icons";
 export default function PpsRemainVariants({ variants, handleAddPps }) {
   return (
-   <div style={{marginTop:'2%',marginBottom:'2%'}}>
-     <Card title="Variants without Metafields">
+    <Card title="Variants without Metafields">
       <div style={{ marginBottom: "1%", marginTop: "1%" }}>
         <Text alignment="center" fontWeight="bold" variant="bodyLg">
           Variants Pending Configuration
@@ -49,6 +48,5 @@ export default function PpsRemainVariants({ variants, handleAddPps }) {
         ))}
       </IndexTable>
     </Card>
-   </div>
   );
 }

@@ -1,9 +1,9 @@
 import { redirect, useLoaderData, useSubmit } from "@remix-run/react";
-import { Button, Card, Select, Badge , Layout, Page, TextField, Text, InlineGrid, Tooltip, ButtonGroup, Thumbnail } from "@shopify/polaris";
+import { Button, Card, Select, Badge , Layout, Page, TextField, Text, InlineGrid, Tooltip, ButtonGroup } from "@shopify/polaris";
 import { useState, useEffect } from 'react';
 import { authenticate } from "../shopify.server";
 import db from "../db.server";
-import { UpdateProduct  } from "../utils/graphql/product";
+import { getProductById, UpdateProduct  } from "../utils/graphql/product";
 import { availableLocationsData } from "../utils/apis/hit";
 import PodConfig from "../components/products/pod/PodConfig";
 import UpdatePodConfig from "../components/products/pod/UpdatePodConfig";
@@ -13,65 +13,12 @@ export async function loader({ request, params }) {
   const productId = params.id;
   const configs = await db.podConfigs.findMany({ where: { productId: productId } });
 
-  const query = `#graphql
-    query GetProduct($id: ID!) {
-      product(id: $id) {
-        id
-        title
-        handle
-        description
-        tags
-        featuredImage {
-          originalSrc
-        }
-        variants(first: 100) {
-          edges {
-            node {
-              id
-              sku
-              price
-              inventoryItem {
-                measurement {
-                  weight {
-                    unit
-                    value
-                  }
-                }
-              }
-              availableForSale
-              selectedOptions {
-                name
-                value
-              }
-            }
-          }
-        }
-        metafields(first: 10, namespace: "profill") {
-          edges {
-            node {
-              id
-              namespace
-              key
-              value
-              type
-              description
-            }
-          }
-        }
-        productType
-        status
-      }
-    }
-  `;
+ 
 
   try {
-    const graphqlResponse = await admin.graphql(query, { variables: { id: `gid://shopify/Product/${productId}` } });
-    const response = await graphqlResponse.json();
-
-    if (!graphqlResponse.ok) {
-      throw new Error(response.errors ? JSON.stringify(response.errors) : 'Unknown error');
-    }
-    return { product: response.data.product, configs };
+    const product = await getProductById(admin, params.id);
+    return { product: product.product, configs };
+    
   } catch (error) {
     console.error('Error fetching product:', error.message);
     return { product: null, configs: null };
@@ -80,6 +27,7 @@ export async function loader({ request, params }) {
 
 export default function ProductPage() {
   const { product, configs: initialConfigs } = useLoaderData();
+  console.log(product);
   const submit = useSubmit();
   const apparelValue =
   product.metafields.edges.find(
@@ -191,8 +139,7 @@ export default function ProductPage() {
               <div>
                 <InlineGrid columns={2} gap={"200"}>
                 {product.featuredImage && (
-                  <Thumbnail source={product.featuredImage.originalSrc} size="medium"/>
-                
+                    <img src={product.featuredImage.originalSrc} alt={product.title} width="50%" />
                   )}
                   <Text>
                     {product.description}

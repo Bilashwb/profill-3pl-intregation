@@ -3,7 +3,6 @@ import {
     Text,
     InlineGrid,
     Badge,
-    Thumbnail,
  
   } from "@shopify/polaris";
 export default function ProductCard({product}) {
@@ -39,9 +38,11 @@ export default function ProductCard({product}) {
     <div>
       {product.featuredImage && (
         <Card>
-          <Thumbnail 
-          source={product?.featuredImage?.originalSrc}/>
-        
+          <img
+            src={product.featuredImage.originalSrc}
+            alt={product.title}
+            style={{ width: "30%" }}
+          />
         </Card>
       )}
     </div>

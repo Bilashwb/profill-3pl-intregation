@@ -68,7 +68,7 @@ export default function products() {
 
 useEffect(() => {
 const orders=loaderData.orders;
-
+console.log(loaderData)
    const filterOrders = (orders) => {
     return orders.map(order => {
       const filteredLineItems = order.node.lineItems.nodes.filter(item => {

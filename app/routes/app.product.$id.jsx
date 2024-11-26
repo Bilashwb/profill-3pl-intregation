@@ -37,8 +37,6 @@ export async function action({ request, params }) {
   const { admin } = await authenticate.admin(request);
   const data = { ...Object.fromEntries(await request.formData()) };
   const { type, apparel, hitsku } = data;
-  console.log(data);
-
   if (type === "pod") {
     const inp = {
       id: `gid://shopify/Product/${params.id}`,
@@ -64,13 +62,12 @@ export async function action({ request, params }) {
         },
       ],
     };
-    
     await UpdateProduct(admin, inp);
     return redirect("/app/product/pod/" + params.id);
   } else if (type === "pps") {
     const inp = {
       id: `gid://shopify/Product/${params.id}`,
-      productType: "PPS",
+      productType: "POD",
       metafields: [
         {
           namespace: "profill",

@@ -17,7 +17,7 @@ export async function action({ request }) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     fs.writeFileSync(filePath, buffer);
-    const fileUrl = `https://profill-3pl-intregation.onrender.com/uploads/${fileName}`;
+    const fileUrl = `https://demo-app.somnetics.in/uploads/${fileName}`;
     return {fileName,fileUrl};
   } catch (error) {
     return {fileName:"",filePath:""};

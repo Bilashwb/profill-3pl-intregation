@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "252d5f53b8d8ee42053c52a9c6717b05"
-application_url = "https://outsourcing-appearance-abroad-thunder.trycloudflare.com"
+application_url = "https://terms-kennedy-requesting-ste.trycloudflare.com"
 embedded = true
 name = "Profill 3pl Intregation"
 handle = "profill-3pl-intregation"
@@ -19,9 +19,9 @@ scopes = "read_customers,read_draft_orders,read_fulfillments,read_inventory,read
 
 [auth]
 redirect_urls = [
-  "https://outsourcing-appearance-abroad-thunder.trycloudflare.com/auth/callback",
-  "https://outsourcing-appearance-abroad-thunder.trycloudflare.com/auth/shopify/callback",
-  "https://outsourcing-appearance-abroad-thunder.trycloudflare.com/api/auth/callback"
+  "https://terms-kennedy-requesting-ste.trycloudflare.com/auth/callback",
+  "https://terms-kennedy-requesting-ste.trycloudflare.com/auth/shopify/callback",
+  "https://terms-kennedy-requesting-ste.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
